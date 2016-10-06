@@ -1,20 +1,16 @@
 FROM gliderlabs/alpine:3.3
 
 COPY . /go/src/github.com/gliderlabs/registrator
-RUN apk-install -t build-deps build-base go git mercurial
-RUN cd /go/src/github.com/gliderlabs/registrator
-RUN export GOPATH=/go
-RUN go get
-RUN go build -ldflags "-X main.Version=$(cat VERSION)" -o /bin/registrator
-RUN rm -rf /go
-RUN apk del --purge build-deps
+RUN apk-install -t build-deps build-base go git mercurial \
+	&& cd /go/src/github.com/gliderlabs/registrator \
+	&& export GOPATH=/go \
+	&& go get \
+	&& go build -ldflags "-X main.Version=$(cat VERSION)" -o /bin/registrator \
+	&& rm -rf /go \
+	&& apk del --purge build-deps
 
-# PUT RUN.SH IN THE RIGHT PLACE ==========
-
-ADD run.sh /bin/registrator/run.sh
-RUN chmod +x /bin/registrator/run.sh
-
-# RUN ==========
+ADD run.sh /usr/local/bin/run.sh
+RUN chmod +x /usr/local/bin/run.sh
 
 ENTRYPOINT ["/bin/bash"]
-CMD ["/bin/registrator/run.sh"]
+CMD ["/usr/local/bin/run.sh"]
