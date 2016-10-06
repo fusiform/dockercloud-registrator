@@ -16,5 +16,5 @@ RUN chmod +x /bin/registrator/run.sh
 
 # RUN ==========
 
-# ENTRYPOINT ["/bin/registrator"]
+ENTRYPOINT ["/bin/bash"]
 CMD ["/bin/registrator/run.sh"]
