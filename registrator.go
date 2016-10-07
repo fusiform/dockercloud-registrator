@@ -4,11 +4,12 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"strings"
 	"time"
-	"net/http"
 
 	dockerapi "github.com/fsouza/go-dockerclient"
 	"github.com/gliderlabs/pkg/usage"
@@ -75,8 +76,22 @@ func main() {
 	} else {
 		log.Println("trying to get ip address")
 		resp, err := http.Get("http://169.254.169.254/latest/meta-data/public-ipv4")
-		assert(err)
-		log.Println(*resp)
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		defer resp.Body.Close()
+
+		htmlData, err := ioutil.ReadAll(resp.Body) //<--- here!
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		// print out
+		fmt.Println(os.Stdout, string(htmlData))
 	}
 
 	if (*refreshTtl == 0 && *refreshInterval > 0) || (*refreshTtl > 0 && *refreshInterval == 0) {
