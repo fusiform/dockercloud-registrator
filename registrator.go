@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"net/http"
 
 	dockerapi "github.com/fsouza/go-dockerclient"
 	"github.com/gliderlabs/pkg/usage"
@@ -71,6 +72,11 @@ func main() {
 
 	if *hostIp != "" {
 		log.Println("Forcing host IP to", *hostIp)
+	} else {
+		log.Println("trying to get ip address")
+		resp, err := http.Get("http://169.254.169.254/latest/meta-data/public-ipv4")
+		log.Println(*resp)
+		log.Println(*err)
 	}
 
 	if (*refreshTtl == 0 && *refreshInterval > 0) || (*refreshTtl > 0 && *refreshInterval == 0) {
