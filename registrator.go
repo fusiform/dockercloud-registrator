@@ -76,7 +76,6 @@ func main() {
 		log.Println("trying to get ip address")
 		resp, err := http.Get("http://169.254.169.254/latest/meta-data/public-ipv4")
 		log.Println(*resp)
-		log.Println(*err)
 	}
 
 	if (*refreshTtl == 0 && *refreshInterval > 0) || (*refreshTtl > 0 && *refreshInterval == 0) {
