@@ -92,7 +92,7 @@ func main() {
 
 		// print out
     ip_str := string(htmlData)
-		hostIp := strings.TrimSpace(ip_str)
+		*hostIp = strings.TrimSpace(ip_str)
 	}
 
 	if (*refreshTtl == 0 && *refreshInterval > 0) || (*refreshTtl > 0 && *refreshInterval == 0) {
