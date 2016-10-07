@@ -91,7 +91,7 @@ func main() {
 		}
 
 		// print out
-    ip_str := string(htmlData))
+    ip_str := string(htmlData)
 		hostIp := strings.TrimSpace(ip_str)
 	}
 
