@@ -75,7 +75,7 @@ func main() {
 		log.Println("Forcing host IP to", *hostIp)
 	} else {
 		log.Println("trying to get ip address")
-		resp, err := http.Get("http://169.254.169.254/latest/meta-data/public-ipv4")
+		resp, err := http.Get("http://169.254.169.254/latest/meta-data/local-ipv4")
 
 		if err != nil {
 			fmt.Println(err)
